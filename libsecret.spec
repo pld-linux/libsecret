@@ -47,7 +47,7 @@ Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
-Static libsecret libsecret.
+Static libsecret library.
 
 %description static -l pl.UTF-8
 Statyczna biblioteka libsecret.
