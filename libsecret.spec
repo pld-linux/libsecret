@@ -31,6 +31,7 @@ Service.
 %package devel
 Summary:	Header files for libsecret library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libsecret
+Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
@@ -46,7 +47,7 @@ Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
-Static libburn libsecret.
+Static libsecret libsecret.
 
 %description static -l pl.UTF-8
 Statyczna biblioteka libsecret.
