@@ -5,21 +5,25 @@
 %bcond_without	vala            # do not build Vala API
 #
 Summary:	Library for storing and retrieving passwords and other secrets
+Summary(pl.UTF-8):	Biblioteka do przechowywania i odczytu haseł oraz innych tajnych informacji
 Name:		libsecret
 Version:	0.11
 Release:	1
-License:	LGPL v2+
+License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.11/%{name}-%{version}.tar.xz
 # Source0-md5:	8e8b72fdbdafbb54381b7a0085be9b0c
 URL:		https://live.gnome.org/Libsecret
-BuildRequires:	glib2-devel >= 2.31.0
+BuildRequires:	glib2-devel >= 1:2.31.0
 BuildRequires:	gobject-introspection-devel >= 1.29
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.9}
+BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libgcrypt-devel >= 1.2.2
 BuildRequires:	libxslt-progs
 BuildRequires:	pkgconfig
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
+Requires:	glib2 >= 1:2.31.0
+Requires:	libgcrypt >= 1.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -28,11 +32,19 @@ secrets. It communicates with the "Secret Service" using DBus.
 gnome-keyring and KSecretService are both implementations of a Secret
 Service.
 
+%description -l pl.UTF-8
+libsecret to biblioteka do przechowywania i odczytu haseł oraz innych
+tajnych informacji. Komunikuje się z usługą informacji tajnych
+("Secret Service") poprzez DBus. Zarówno gnome-keyring, jak i
+KSecretService są implementacjami tej usługi.
+
 %package devel
 Summary:	Header files for libsecret library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libsecret
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.31.0
+Requires:	libgcrypt-devel >= 1.2.2
 
 %description devel
 Header files for libsecret library.
@@ -44,7 +56,7 @@ Pliki nagłówkowe biblioteki libsecret.
 Summary:	Static libsecret library
 Summary(pl.UTF-8):	Statyczna biblioteka libsecret
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static libsecret library.
@@ -67,7 +79,8 @@ Dokumentacja API biblioteki libsecret.
 Summary:	libsecret API for Vala language
 Summary(pl.UTF-8):	API libsecret dla języka Vala
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	vala >= 2:0.17.2.12
 
 %description -n vala-libsecret
 libsecret API for Vala language.
@@ -98,13 +111,12 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files -f libsecret.lang
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/secret-tool
 %attr(755,root,root) %{_libdir}/libsecret-1.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libsecret-1.so.0
@@ -114,9 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/libsecret-1/
-%{_libdir}/libsecret-1.so
+%attr(755,root,root) %{_libdir}/libsecret-1.so
 %{_libdir}/libsecret-1.la
+%{_includedir}/libsecret-1
 %{_pkgconfigdir}/libsecret-1.pc
 %{_pkgconfigdir}/libsecret-unstable.pc
 %{_datadir}/gir-1.0/Secret-1.gir
