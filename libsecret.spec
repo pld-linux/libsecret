@@ -7,14 +7,14 @@
 Summary:	Library for storing and retrieving passwords and other secrets
 Summary(pl.UTF-8):	Biblioteka do przechowywania i odczytu haseł oraz innych tajnych informacji
 Name:		libsecret
-Version:	0.12
+Version:	0.13
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.12/%{name}-%{version}.tar.xz
-# Source0-md5:	2f787eea16ef992daa62c1ee41072bbc
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.13/%{name}-%{version}.tar.xz
+# Source0-md5:	701d96d12c0e026437911ba05abc72b1
 URL:		https://live.gnome.org/Libsecret
-BuildRequires:	glib2-devel >= 1:2.31.0
+BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gobject-introspection-devel >= 1.29
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.9}
 BuildRequires:	intltool >= 0.35.0
@@ -22,7 +22,7 @@ BuildRequires:	libgcrypt-devel >= 1.2.2
 BuildRequires:	libxslt-progs
 BuildRequires:	pkgconfig
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
-Requires:	glib2 >= 1:2.31.0
+Requires:	glib2 >= 1:2.32.0
 Requires:	libgcrypt >= 1.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -43,7 +43,7 @@ Summary:	Header files for libsecret library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libsecret
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.31.0
+Requires:	glib2-devel >= 1:2.32.0
 Requires:	libgcrypt-devel >= 1.2.2
 
 %description devel
