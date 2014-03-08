@@ -7,14 +7,14 @@
 Summary:	Library for storing and retrieving passwords and other secrets
 Summary(pl.UTF-8):	Biblioteka do przechowywania i odczytu haseł oraz innych tajnych informacji
 Name:		libsecret
-Version:	0.16
-Release:	2
+Version:	0.18
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.16/%{name}-%{version}.tar.xz
-# Source0-md5:	321ef07775faed2305da08f989dfa41b
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.18/%{name}-%{version}.tar.xz
+# Source0-md5:	279d723cd005e80d1d304f74a3488acc
 URL:		https://live.gnome.org/Libsecret
-BuildRequires:	glib2-devel >= 1:2.32.0
+BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gobject-introspection-devel >= 1.29
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.9}
 BuildRequires:	intltool >= 0.35.0
@@ -22,7 +22,7 @@ BuildRequires:	libgcrypt-devel >= 1.2.2
 BuildRequires:	libxslt-progs
 BuildRequires:	pkgconfig
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
-Requires:	glib2 >= 1:2.32.0
+Requires:	glib2 >= 1:2.38.0
 Requires:	libgcrypt >= 1.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -43,7 +43,7 @@ Summary:	Header files for libsecret library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libsecret
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.32.0
+Requires:	glib2-devel >= 1:2.38.0
 Requires:	libgcrypt-devel >= 1.2.2
 
 %description devel
@@ -121,7 +121,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libsecret-1.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libsecret-1.so.0
 %{_libdir}/girepository-1.0/Secret-1.typelib
-%{_libdir}/girepository-1.0/SecretUnstable-0.typelib
 %{_mandir}/man1/secret-tool.1*
 
 %files devel
@@ -132,7 +131,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/libsecret-1.pc
 %{_pkgconfigdir}/libsecret-unstable.pc
 %{_datadir}/gir-1.0/Secret-1.gir
-%{_datadir}/gir-1.0/SecretUnstable-0.gir
 
 %if %{with static_libs}
 %files static
@@ -151,7 +149,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_datadir}/vala/vapi/libsecret-1.deps
 %{_datadir}/vala/vapi/libsecret-1.vapi
-%{_datadir}/vala/vapi/libsecret-unstable.deps
-%{_datadir}/vala/vapi/libsecret-unstable.vapi
-%{_datadir}/vala/vapi/mock-service-0.vapi
 %endif
