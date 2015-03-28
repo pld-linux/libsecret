@@ -3,12 +3,12 @@
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	static_libs	# don't build static library
 %bcond_without	vala            # do not build Vala API
-#
+
 Summary:	Library for storing and retrieving passwords and other secrets
 Summary(pl.UTF-8):	Biblioteka do przechowywania i odczytu haseł oraz innych tajnych informacji
 Name:		libsecret
 Version:	0.18
-Release:	3
+Release:	4
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.18/%{name}-%{version}.tar.xz
@@ -68,6 +68,9 @@ Statyczna biblioteka libsecret.
 Summary:	libsecret API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libsecret
 Group:		Documentation
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 libsecret API documentation.
