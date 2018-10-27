@@ -13,7 +13,11 @@ License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.18/%{name}-%{version}.tar.xz
 # Source0-md5:	c6cf132a56bd346fbf49a43abb02e5c2
+Patch0:		%{name}-sh.patch
 URL:		https://live.gnome.org/Libsecret
+BuildRequires:	autoconf >= 2.63
+BuildRequires:	automake >= 1:1.11
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gobject-introspection-devel >= 1.29
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.9}
@@ -96,8 +100,15 @@ API libsecret dla języka Vala.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__intltoolize}
+%{__libtoolize}
+%{__aclocal} -I build/m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-silent-rules \
 	%{__enable_disable static_libs static} \
