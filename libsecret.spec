@@ -13,7 +13,7 @@ License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.18/%{name}-%{version}.tar.xz
 # Source0-md5:	fee403988442f497f3c1dfe7b128869c
-URL:		https://wiki.gnome.org/Libsecret
+URL:		https://wiki.gnome.org/Projects/Libsecret
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-tools >= 0.19.8
