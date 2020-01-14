@@ -7,12 +7,12 @@
 Summary:	Library for storing and retrieving passwords and other secrets
 Summary(pl.UTF-8):	Biblioteka do przechowywania i odczytu haseł oraz innych tajnych informacji
 Name:		libsecret
-Version:	0.18.8
-Release:	3
+Version:	0.20.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.18/%{name}-%{version}.tar.xz
-# Source0-md5:	fee403988442f497f3c1dfe7b128869c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.20/%{name}-%{version}.tar.xz
+# Source0-md5:	335750caeed47f50496b3b0e6a1875ff
 URL:		https://wiki.gnome.org/Projects/Libsecret
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.11
@@ -21,6 +21,7 @@ BuildRequires:	glib2-devel >= 1:2.44.0
 BuildRequires:	gobject-introspection-devel >= 1.29
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.9}
 BuildRequires:	libgcrypt-devel >= 1.2.2
+BuildRequires:	libtool
 BuildRequires:	libxslt-progs
 BuildRequires:	pkgconfig
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
