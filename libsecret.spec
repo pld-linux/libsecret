@@ -71,9 +71,7 @@ Statyczna biblioteka libsecret.
 Summary:	libsecret API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libsecret
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 libsecret API documentation.
@@ -87,9 +85,7 @@ Summary(pl.UTF-8):	API libsecret dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.17.2.12
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n vala-libsecret
 libsecret API for Vala language.
