@@ -1,30 +1,35 @@
 #
 # Conditional build:
-%bcond_without	apidocs		# disable gtk-doc
-%bcond_without	static_libs	# don't build static library
-%bcond_without	vala            # do not build Vala API
+%bcond_without	apidocs		# gtk-doc based API documentation
+%bcond_without	static_libs	# static library
+%bcond_without	tpm2		# TPM2 support
+%bcond_without	vala            # Vala API
 
 Summary:	Library for storing and retrieving passwords and other secrets
 Summary(pl.UTF-8):	Biblioteka do przechowywania i odczytu haseł oraz innych tajnych informacji
 Name:		libsecret
-Version:	0.20.4
+Version:	0.20.5
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.20/%{name}-%{version}.tar.xz
-# Source0-md5:	bf92f48afab2891f644f311e0f37683f
+Source0:	https://download.gnome.org/sources/libsecret/0.20/%{name}-%{version}.tar.xz
+# Source0-md5:	5c9e5a011852c82fa9ed9e61ba91efb5
 URL:		https://wiki.gnome.org/Projects/Libsecret
-BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-tools >= 0.19.8
+%{?with_apidocs:BuildRequires:	gi-docgen >= 2021.7}
 BuildRequires:	glib2-devel >= 1:2.44.0
 BuildRequires:	gobject-introspection-devel >= 1.29
-%{?with_apidocs:BuildRequires:	gtk-doc >= 1.9}
 BuildRequires:	libgcrypt-devel >= 1.2.2
-BuildRequires:	libtool
 BuildRequires:	libxslt-progs
+BuildRequires:	meson >= 0.50
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
+BuildRequires:	rpmbuild(macros) >= 1.746
+BuildRequires:	tar >= 1:1.22
+%{?with_tpm2:BuildRequires:	tpm2-tss-devel >= 3.0.3}
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
+BuildRequires:	xz
 Requires:	glib2 >= 1:2.44.0
 Requires:	libgcrypt >= 1.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -97,28 +102,27 @@ API libsecret dla języka Vala.
 %setup -q
 
 %build
-%{__gettextize}
-%{__libtoolize}
-%{__aclocal} -I build/m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	%{__enable_disable apidocs gtk-doc} \
-	--disable-silent-rules \
-	%{__enable_disable static_libs static} \
-	%{__enable_disable vala vala} \
-	--with-html-dir=%{_gtkdocdir}/%{name}
-%{__make}
+%meson build \
+	%{!?with_static_libs:--default-library=shared} \
+	-Dbashcompdir=%{bash_compdir} \
+	%{!?with_apidocs:-Dgtk_doc=false} \
+	%{?with_tpm2:-Dtpm2=true} \
+	%{!?with_vala:-Dvapi=false}
+
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
 
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libsecret-1.la
+%if %{with apidocs}
+# FIXME: where to package gi-docgen generated docs?
+install -d $RPM_BUILD_ROOT%{_gtkdocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/libsecret-1 $RPM_BUILD_ROOT%{_gtkdocdir}/libsecret
+%endif
+
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ab
 
 %find_lang libsecret
 
@@ -130,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f libsecret.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README
+%doc NEWS README.md
 %attr(755,root,root) %{_bindir}/secret-tool
 %attr(755,root,root) %{_libdir}/libsecret-1.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libsecret-1.so.0
