@@ -122,8 +122,6 @@ install -d $RPM_BUILD_ROOT%{_gtkdocdir}
 %{__mv} $RPM_BUILD_ROOT%{_docdir}/libsecret-1 $RPM_BUILD_ROOT%{_gtkdocdir}/libsecret
 %endif
 
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ab
-
 %find_lang libsecret
 
 %clean
