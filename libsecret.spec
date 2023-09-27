@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	apidocs		# gtk-doc based API documentation
+%bcond_without	apidocs		# gi-docgen based API documentation
 %bcond_without	static_libs	# static library
 %bcond_without	tpm2		# TPM2 support
 %bcond_without	vala            # Vala API
@@ -25,7 +25,7 @@ BuildRequires:	meson >= 0.50
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.746
+BuildRequires:	rpmbuild(macros) >= 2.029
 BuildRequires:	tar >= 1:1.22
 %{?with_tpm2:BuildRequires:	tpm2-tss-devel >= 3.0.3}
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
@@ -117,9 +117,8 @@ rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
 %if %{with apidocs}
-# FIXME: where to package gi-docgen generated docs?
-install -d $RPM_BUILD_ROOT%{_gtkdocdir}
-%{__mv} $RPM_BUILD_ROOT%{_docdir}/libsecret-1 $RPM_BUILD_ROOT%{_gtkdocdir}/libsecret
+install -d $RPM_BUILD_ROOT%{_gidocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/libsecret-1 $RPM_BUILD_ROOT%{_gidocdir}/libsecret
 %endif
 
 %find_lang libsecret
@@ -156,7 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/%{name}
+%{_gidocdir}/%{name}
 %endif
 
 %if %{with vala}
