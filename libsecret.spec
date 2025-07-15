@@ -102,19 +102,19 @@ API libsecret dla języka Vala.
 %setup -q
 
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
 	-Dbashcompdir=%{bash_compdir} \
 	%{!?with_apidocs:-Dgtk_doc=false} \
 	%{?with_tpm2:-Dtpm2=true} \
 	%{!?with_vala:-Dvapi=false}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with apidocs}
 install -d $RPM_BUILD_ROOT%{_gidocdir}
