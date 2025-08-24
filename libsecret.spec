@@ -25,7 +25,7 @@ BuildRequires:	meson >= 0.50
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.029
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 %{?with_tpm2:BuildRequires:	tpm2-tss-devel >= 3.0.3}
 %{?with_vala:BuildRequires:	vala >= 2:0.17.2.12}
